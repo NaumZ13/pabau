@@ -45,9 +45,9 @@ jQuery(document).ready(function($) {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    console.log(response)
                     alert(response.data.message);
-                    $('#leadForm')[0].reset(); 
+                    $('#leadForm')[0].reset();
+                    window.location.href = response.data.redirect_link; 
                 } else {
                     console.log(response)
                     alert(response.data.message);

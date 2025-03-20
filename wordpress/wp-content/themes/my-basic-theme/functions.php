@@ -47,10 +47,12 @@ add_action('customize_register', 'mytheme_customize_register');
 function mytheme_handle_lead_submission() {
     check_ajax_referer('lead_form_nonce', 'nonce');
 
-    $api_key = 'MTUyMTc5c6555c14e129a73a29c7cfd29ecd593'; 
+    $api_key = LEAD_API_KEY; 
     $api_url = 'https://uk2.pabau.me/OAuth2/leads/lead-curl.php';
-
+    $redirect_link = home_url('/thank-you');
+    
     $data = array(
+        'redirect_link' => $redirect_link,
         'Fname'    => sanitize_text_field($_POST['firstname']),
         'Lname'    => sanitize_text_field($_POST['lastname']),
         'salutation' => sanitize_text_field($_POST['salutation']),
@@ -76,7 +78,7 @@ function mytheme_handle_lead_submission() {
         if ($status_code === 200) {
             wp_send_json_success(array(
                 'message' => 'Lead created successfully!',
-                'response' => $body,
+                'redirect_link' => $redirect_link
             ));
         } else {
             wp_send_json_error(array('message' => 'API error: ' . $body, 'status' => $status_code));
