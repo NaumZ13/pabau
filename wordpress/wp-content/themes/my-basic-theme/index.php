@@ -5,8 +5,8 @@ get_header();
 
 <main class="flex flex-col min-h-screen">
     <div class="relative flex flex-col items-center justify-center p-16 text-white bg-gradient-to-r from-blue-500 to-sky-700">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-center">Lead Capture Form</h1>
-        <p class="text-lg max-w-3xl text-center text-gray-200 ">Unlock the power of Pabau's Lead Capture Widget—embed it on your site and turn visitors into patients effortlessly.</p>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-center"> <?php echo esc_html(get_theme_mod('theme_title', 'Lead Capture Form')); ?></h1>
+        <?php echo wp_kses_post(get_theme_mod('theme_description', 'Unlock the power of Pabau\'s Lead Capture Widget—embed it on your site and turn visitors into patients effortlessly.')); ?>
     </div>
 
     <div class="bg-white">
