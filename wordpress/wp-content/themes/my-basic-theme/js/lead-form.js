@@ -14,17 +14,17 @@ jQuery(document).ready(function($) {
             nonce: leadFormSettings.nonce 
         };
 
-        for (const key in formData) {
-            if (!formData[key] && key !== 'nonce') {
-                alert('All fields are required!');
-                return;
-            }
+        if (!formData.firstname || !formData.lastname) {
+            alert('First name and last name are required!');
+            return;
         }
 
-        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        if (!emailPattern.test(formData.email)) {
-            alert('Please enter a valid email address.');
-            return;
+        if (formData.email) {
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!emailPattern.test(formData.email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
         }
 
         $.ajax({
@@ -45,8 +45,6 @@ jQuery(document).ready(function($) {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    alert(response.data.message);
-                    $('#leadForm')[0].reset();
                     window.location.href = response.data.redirect_link; 
                 } else {
                     console.log(response)

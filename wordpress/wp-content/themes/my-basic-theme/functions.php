@@ -1,6 +1,7 @@
 <?php
 
-function mytheme_enqueue_assets() {
+function mytheme_enqueue_assets()
+{
     wp_enqueue_script('jquery');
     wp_enqueue_script('lead-form', get_template_directory_uri() . '/js/lead-form.js', array('jquery'), null, true);
 
@@ -11,7 +12,8 @@ function mytheme_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'mytheme_enqueue_assets');
 
-function mytheme_customize_register($wp_customize) {
+function mytheme_customize_register($wp_customize)
+{
     $wp_customize->add_section('mytheme_home_settings', array(
         'title'    => __('Theme Fields', 'my-basic-theme'),
         'priority' => 30,
@@ -44,14 +46,23 @@ function mytheme_customize_register($wp_customize) {
 add_action('customize_register', 'mytheme_customize_register');
 
 
-function mytheme_handle_lead_submission() {
+function mytheme_handle_lead_submission()
+{
     check_ajax_referer('lead_form_nonce', 'nonce');
 
-    $api_key = LEAD_API_KEY; 
+    $api_key = LEAD_API_KEY;
     $api_url = 'https://uk2.pabau.me/OAuth2/leads/lead-curl.php';
     $redirect_link = home_url('/thank-you');
-    
+
+    $required_fields = ['firstname', 'lastname'];
+    foreach ($required_fields as $field) {
+        if (empty($_POST[$field])) {
+            wp_send_json_error(['message' => ucfirst($field) . ' is required.']);
+        }
+    }
+
     $data = array(
+        'api_key' => $api_key,
         'redirect_link' => $redirect_link,
         'Fname'    => sanitize_text_field($_POST['firstname']),
         'Lname'    => sanitize_text_field($_POST['lastname']),
@@ -65,7 +76,7 @@ function mytheme_handle_lead_submission() {
 
     $response = wp_remote_post($api_url, array(
         'method'    => 'POST',
-        'body'      => array_merge(array('api_key' => $api_key), $data),
+        'body'      => $data,
         'headers'   => array('Content-Type' => 'application/x-www-form-urlencoded'),
         'timeout'   => 15,
     ));
@@ -75,10 +86,15 @@ function mytheme_handle_lead_submission() {
     } else {
         $body = wp_remote_retrieve_body($response);
         $status_code = wp_remote_retrieve_response_code($response);
-        if ($status_code === 200) {
+
+        if (strpos($body, 'Invalid Api Key') !== false) {
+            wp_send_json_error(array('message' => 'API error: Invalid API key'));
+        } elseif (strpos($body, 'Lead with this name was already created recently') !== false) {
+            wp_send_json_error(array('message' => 'Error: A lead with this name was already created recently.'));
+        } elseif ($status_code === 200) {
             wp_send_json_success(array(
                 'message' => 'Lead created successfully!',
-                'redirect_link' => $redirect_link
+                'redirect_link' => $redirect_link,
             ));
         } else {
             wp_send_json_error(array('message' => 'API error: ' . $body, 'status' => $status_code));
@@ -89,4 +105,5 @@ function mytheme_handle_lead_submission() {
 }
 add_action('wp_ajax_submit_lead_form', 'mytheme_handle_lead_submission');
 add_action('wp_ajax_nopriv_submit_lead_form', 'mytheme_handle_lead_submission');
+
 ?>
