@@ -11,6 +11,7 @@
 ## Notes:
 - Only the custom theme is included in this repo.
 - Please use the API key you provided and update the `wp-config.php` LEAD_API_KEY ( for safety reasons ). 
+- If you encounter problems with the API request or missing the thank-you page, please add the .htaaccess as well
 
 ## Login Credentials:
 - username: pabau
