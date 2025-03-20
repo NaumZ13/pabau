@@ -1,5 +1,4 @@
 <?php
-/* Template Name: Home */
 get_header();
 ?>
 
@@ -21,8 +20,8 @@ get_header();
                     <label for="lastname" class="peer-focus:font-medium absolute text-xs text-gray-500 duration-300 transform -translate-y-5 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5">Last Name</label>
                 </div>
                 <div class="relative z-0 w-full mb-4 group">
-                    <input type="text" name="salutaion" id="salutaion" class="block py-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                    <label for="salutaion" class="peer-focus:font-medium absolute text-xs text-gray-500 duration-300 transform -translate-y-5 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5">Salutation (Mr/Miss)</label>
+                    <input type="text" name="salutation" id="salutation" class="block py-2 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="salutation" class="peer-focus:font-medium absolute text-xs text-gray-500 duration-300 transform -translate-y-5 scale-75 top-1 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-5">Salutation (Mr/Miss)</label>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
